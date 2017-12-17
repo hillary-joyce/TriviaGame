@@ -1,26 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Space Trivia Game</title>
-  </head>
-  <body>
-    <div id="countDown">Time Left: 30</div>
-    <div id="questionsDiv"></div>
-    <button class="button" value="0"></button>
-    <button class="button" value="1"></button>
-    <button class="button" value="2"></button>
-    </div>
-    <button type="button" id="button">Count Down</button>
-    <div class="right-wrong">
-    </div>
 
-    <!--Link to jQuery -->
-    <script
-  src="https://code.jquery.com/jquery-3.2.1.js"
-  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  crossorigin="anonymous"></script>
-  <!-- Link to custom JavaScript -->
+<head>
+  <meta charset="utf-8">
+  <title>Space Trivia Game</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Audiowide|Montserrat:300" rel="stylesheet">
+  <!-- CSS LINKS -->
+  <!-- Reset CSS -->
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <!-- Custom stylesheet -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+  <div class="main-title">
+      <h1 class="space-trivia-title">SPACE TRIVIA</h1>
+      <button class="button start-game">START GAME</button>
+  </div>
+
+  <div class="game-play-background frosted"></div>
+  <div class="questions-div">
+    <div class="count-down" id="countDown"><span>Time Left: 30</span></div>
+    <div id="questionsDiv"></div>
+    <button class="button answer-button" value="0"></button>
+    <button class="button answer-button" value="1"></button>
+    <button class="button answer-button" value="2"></button>
+  </div>
+
+  <!-- answered question div -->
+  <div class="answer-result-div">
+    <h2 class="answer-result"></h2>
+    <img class="result-image" src="" alt="">
+    <span class="result-fact"></span>
+    <button class="button" id="nextQuestion"> Next Question</button>
+  </div>
+
+  <!-- Win-Lose div -->
+  <div class="game-over-div">
+    <h2 class="game-result"></h2>
+    <p class="game-stats"></p>
+    <button class="button" id="playAgain">Play Again</button>
+  </div>
+  <!-- javaScript Links -->
+  <!--jQuery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+  <!-- Bootstrap -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <!-- Custom JavaScript -->
   <script src="assets/javascript/app.js" charset="utf-8"></script>
-  </body>
+</body>
+
 </html>
