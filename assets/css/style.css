@@ -9,8 +9,11 @@ body {
   text-align: center;
   color: white;
 }
-span, p {
-  font-size: 1.5em;
+
+h2, span {
+  font-size: 3vh;
+  margin: 10px auto;
+  display: block;
 }
 
 .frosted {
@@ -37,10 +40,6 @@ span, p {
 }
 
 /************** Heading Div ***************/
-.top-div {
-  height: 20vh;
-}
-
 .main-title {
   width: 100vw;
   height: 25vh;
@@ -53,6 +52,11 @@ span, p {
   padding-top: 25px;
   font-size: 5em;
   text-shadow: 3px 3px 3px black;
+  display: none;
+}
+
+.start-game {
+  display: none;
 }
 
 /******* Gameplay Divs *********/
@@ -62,6 +66,8 @@ span, p {
   height: 300px;
   margin: 5% auto;
   position: relative;
+  display: none;
+  border-radius: 10px;
 }
 .questions-div, .answer-result-div, .game-over-div {
   position: absolute;
@@ -69,12 +75,38 @@ span, p {
   width: 70%;
   top: 45%;
   left: 15%;
-  padding-top: 40px;
   display: none;
+  border-radius: 10px;
 }
 
 /**** Questions Div ******/
-.questions-div {
-  display: block;
+
+.answer-button {
+  margin: 5px auto;
+}
+
+.count-down {
+  font-size: 2vh;
+}
+
+/****** Answer Result Div ******/
+.result-image {
+  height: 150px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 60px 2px rgba(255,255,255,0.3);
+}
+
+.result-fact {
+  font-size: 2.5vh;
+}
+
+/****** Game Results Div *****/
+.game-result {
+  font-family: 'Audiowide', cursive;
+  font-size: 7vh;
+  margin: 30px auto;
+}
+.game-stats {
+  margin: 30px auto;
 }
 /**** Meida Query for Frosted background for phones ***/
