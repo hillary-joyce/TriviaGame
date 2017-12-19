@@ -4,6 +4,7 @@ var correctAnswers = 0;
 var incorrectAnswers = 0;
 var missedAnswers = 0;
 var currentQuestion = 0;
+var gameOver = false;
 var spaceQuiz = [{
     question: "What is the closest star system to the Solar System?",
     correctAnswer: "Proxima Centauri",
@@ -59,7 +60,17 @@ $(document).ready(function() {
 
 
   //Set up functions for the javascript to use
-
+  function reset() {
+    timer = 0;
+    intervalId;
+    correctAnswers = 0;
+    incorrectAnswers = 0;
+    missedAnswers = 0;
+    currentQuestion = 0;
+    gameOver = false;
+    $(".game-over-div").fadeOut(700);
+    $(".questions-div").fadeIn(2000);
+  }
 
   function countDown() {
     if (timer > 0) {
@@ -69,11 +80,11 @@ $(document).ready(function() {
       //if the timer reaches zero, change the timesUp boolean to false (to trigger a new question later on)
       missedAnswers++;
       currentQuestion++;
-			if (currentQuestion > spaceQuiz.length - 1) {
-				gameResults();
-			} else {
-				newQuestion();
-			}
+      if (currentQuestion > spaceQuiz.length - 1) {
+        gameResults();
+      } else {
+        newQuestion();
+      }
     }
   };
 
@@ -85,7 +96,9 @@ $(document).ready(function() {
     intervalId = setInterval(countDown, 1000);
     //hide the answer div
     $(".answer-div").fadeOut(700);
+    // create a variable called "current Question" that stores the question we're currently on
     var currentQuestionObject = spaceQuiz[currentQuestion];
+    //set the questions div html to the question associated with our currentQuestion
     $("#questionsDiv").html("<p>" + currentQuestionObject.question + "</p>");
     //Autopopulate the 4 answer buttons with the possible answers
     for (i = 0; i < currentQuestionObject.answerArray.length; i++) {
@@ -93,61 +106,95 @@ $(document).ready(function() {
     }
   }
 
-	function gameResults() {
-		clearInterval(intervalId);
-		$(".answer-result-div").fadeOut(700);
-		$(".game-over-div").fadeIn(700);
-		$(".game-stats").html("<u>Right Answers:</u> " + correctAnswers +
-		"<br><u>Wrong Answers:</u> " + incorrectAnswers +
-		"<br><u>Missed Answers:</u> " + missedAnswers);
-		if(correctAnswers > (incorrectAnswers + missedAnswers)){
-			$(".game-result").text("YOU WIN");
-		} else {
-			$(".game-result").text("YOU LOSE");
-		}
-	}
+
+  // function to run when an answer button is clicked
+  function answerClicked() {
+    //set the variable current button to the text
+    var currentButton = $(this).text();
+    //stop the countdown clock
+    clearInterval(intervalId);
+    //set the correct image gif and space fact for which question we're on
+    $(".result-image").attr("src", spaceQuiz[currentQuestion].answerImg);
+    $(".result-fact").text(spaceQuiz[currentQuestion].bonusFact);
+    //fade out the question div
+    $(".questions-div").fadeOut(700);
+    //fade in the results div
+    $(".answer-result-div").fadeIn(700);
+    //if the button pressed text matches the correct answer
+    if (currentButton === spaceQuiz[currentQuestion].correctAnswer) {
+      //add one to correct answers
+      correctAnswers++;
+      //let the user know they were correct
+      $(".answer-result").text("Correct!");
+    } else {
+      //add one to incorrect answers
+      incorrectAnswers++;
+      //let the user know they were incorrect and show them the right answer
+      $(".answer-result").html("Wrong!<br>The correct answer is: " + spaceQuiz[currentQuestion].correctAnswer);
+    }
+    //add one to current question
+    currentQuestion++;
+    console.log(currentQuestion);
+  };
+
+
+  // function to display the game results at the end fo the game
+
+  function gameResults() {
+    //stop the countdown clock
+    console.log(gameOver);
+    clearInterval(intervalId);
+    gameOver = true;
+    console.log(gameOver);
+    //hide the answer result div
+    $(".answer-result-div").fadeOut(700);
+    // fade in the game over div
+    $(".game-over-div").fadeIn(700);
+    //populate the game stats div with information on right, wrong, and missed answers
+    $(".game-stats").html("<u>Right Answers:</u> " + correctAnswers +
+      "<br><u>Wrong Answers:</u> " + incorrectAnswers +
+      "<br><u>Missed Answers:</u> " + missedAnswers);
+    //if the number of correct answers is greater than missed and incorrect answers...
+    if (correctAnswers > (incorrectAnswers + missedAnswers)) {
+      //...you win the game
+      $(".game-result").text("YOU WIN");
+    } else {
+      //otherwise, you lose
+      $(".game-result").text("YOU LOSE");
+    }
+  }
 
   function playGame() {
+
+    //run the "new question" function
+    if(gameOver === false){
+    newQuestion();
+    //when an answer button is clicked
+    $(".answer-button").click(answerClicked);
+  };
+};
+
+  // establish what happens on button clicks
+  $(".start-game").on("click", function() {
     // hide the start game button
     $(".start-game").css("display", "none");
     // show the game play background div
     $(".game-play-background").fadeIn(2000);
     //show the questions div
     $(".questions-div").fadeIn(2000);
-    newQuestion();
-    $(".answer-button").on("click", function() {
-      var currentButton = $(this).text();
-      clearInterval(intervalId);
-      $(".questions-div").fadeOut(700);
-      $(".answer-result-div").fadeIn(700);
-      //show image and space fact
-      $(".result-image").attr("src", spaceQuiz[currentQuestion].answerImg);
-      $(".result-fact").text(spaceQuiz[currentQuestion].bonusFact);
 
-      if (currentButton === spaceQuiz[currentQuestion].correctAnswer) {
-        correctAnswers++;
-        $(".answer-result").text("Correct!");
-      } else {
-        incorrectAnswers++;
-        $(".answer-result").html("Wrong!<br>The correct answer is: " + spaceQuiz[currentQuestion].correctAnswer);
-      }
-      currentQuestion++;
-      console.log(currentQuestion);
-    });
-  };
-
-  // establish what happens on button clicks
-  $(".start-game").on("click", playGame);
+    playGame();
+  });
   $("#playAgain").on("click", function() {
-    location.reload();
+    reset();
   });
   $("#nextQuestion").on("click", function() {
     // if all questions have been answered
     if (currentQuestion > spaceQuiz.length - 1) {
-			gameResults();
+      gameResults();
     } else {
-			$(".questions-div").fadeIn(700);
-			$(".answer-result-div").fadeOut(700);
+      $(".questions-div").fadeIn(700);
+      $(".answer-result-div").fadeOut(700);
       newQuestion();
     };
   });
