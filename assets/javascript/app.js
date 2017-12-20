@@ -61,14 +61,14 @@ $(document).ready(function() {
 
   //Set up functions for the javascript to use
   function reset() {
+    currentQuestion = 0;
     timer = 0;
     intervalId;
     correctAnswers = 0;
     incorrectAnswers = 0;
     missedAnswers = 0;
-    currentQuestion = 0;
     gameOver = false;
-    $(".game-over-div").fadeOut(700);
+    $(".game-over-div").fadeOut(200);
     $(".questions-div").fadeIn(2000);
   }
 
@@ -95,7 +95,7 @@ $(document).ready(function() {
     //start the countdown clock
     intervalId = setInterval(countDown, 1000);
     //hide the answer div
-    $(".answer-div").fadeOut(700);
+    $(".answer-div").fadeOut(200);
     // create a variable called "current Question" that stores the question we're currently on
     var currentQuestionObject = spaceQuiz[currentQuestion];
     //set the questions div html to the question associated with our currentQuestion
@@ -117,9 +117,9 @@ $(document).ready(function() {
     $(".result-image").attr("src", spaceQuiz[currentQuestion].answerImg);
     $(".result-fact").text(spaceQuiz[currentQuestion].bonusFact);
     //fade out the question div
-    $(".questions-div").fadeOut(700);
+    $(".questions-div").fadeOut(200);
     //fade in the results div
-    $(".answer-result-div").fadeIn(700);
+    $(".answer-result-div").fadeIn(200);
     //if the button pressed text matches the correct answer
     if (currentButton === spaceQuiz[currentQuestion].correctAnswer) {
       //add one to correct answers
@@ -134,7 +134,6 @@ $(document).ready(function() {
     }
     //add one to current question
     currentQuestion++;
-    console.log(currentQuestion);
   };
 
 
@@ -142,14 +141,12 @@ $(document).ready(function() {
 
   function gameResults() {
     //stop the countdown clock
-    console.log(gameOver);
     clearInterval(intervalId);
     gameOver = true;
-    console.log(gameOver);
     //hide the answer result div
-    $(".answer-result-div").fadeOut(700);
+    $(".answer-result-div").fadeOut(200);
     // fade in the game over div
-    $(".game-over-div").fadeIn(700);
+    $(".game-over-div").fadeIn(200);
     //populate the game stats div with information on right, wrong, and missed answers
     $(".game-stats").html("<u>Right Answers:</u> " + correctAnswers +
       "<br><u>Wrong Answers:</u> " + incorrectAnswers +
@@ -185,17 +182,22 @@ $(document).ready(function() {
 
     playGame();
   });
-  $("#playAgain").on("click", function() {
-    reset();
-  });
+
   $("#nextQuestion").on("click", function() {
     // if all questions have been answered
     if (currentQuestion > spaceQuiz.length - 1) {
       gameResults();
     } else {
-      $(".questions-div").fadeIn(700);
-      $(".answer-result-div").fadeOut(700);
+      $(".questions-div").fadeIn(200);
+      $(".answer-result-div").fadeOut(200);
       newQuestion();
     };
   });
+
+  $("#playAgain").on("click", function() {
+    console.log(currentQuestion);
+    reset();
+    console.log(currentQuestion);
+  });
+
 });
